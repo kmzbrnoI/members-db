@@ -1,0 +1,3 @@
+docopt
+aiohttp[speedups]
+aiohttp_jinja2
