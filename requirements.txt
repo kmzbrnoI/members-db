@@ -1,3 +1,6 @@
 docopt
+asyncio
+aiomysql
+sqlalchemy
 aiohttp[speedups]
 aiohttp_jinja2

@@ -1,0 +1,10 @@
+<svg width="250" height="250">
+ <rect x="0" y="0" width="255" height="255" style="fill:white;stroke:black;stroke-width:0" />
+
+  <circle cx="125" cy="105" r="100" stroke="black" stroke-width="2" fill="white" />
+  <circle cx="125" cy="105" r="80" stroke="green" stroke-width="2" fill="green" />
+  <rect x="114" y="24" width="20" height="200" style="fill:white;stroke-width:1;stroke:white" />
+  <rect x="44" y="94" width="170" height="20" style="fill:white;stroke-width:1;stroke:white" />
+
+  <rect x="114" y="204" width="20" height="50" style="fill:black;stroke-width:1;stroke:black" />
+</svg>

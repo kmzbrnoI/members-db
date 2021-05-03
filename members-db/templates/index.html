@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/static/bootstrap/bootstrap.min.css" crossorigin="anonymous">
+
+    <style>
+    body {
+        background-image: url('static/background/{{ theme.background }}');
+        background-attachment: fixed;
+    }
+    </style>
+
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="/static/logo.png">
+
+    <title>simJOP</title>
+</head>
+
+<body class="h-100">
+<div id="page-container" class="container-fluid pr-0 pl-0 h-100 d-flex flex-column">
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">simJOP</a>
+            <div class="nav navbar-default navbar-right">
+                <a href="/auth/login"><button type="button" class="btn btn-secondary">Přihlásit</button></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <br />
+            <h1>simJOP</h1>
+        </div>
+
+        <p class="lead">
+          Svobodný simulátor řízení železniční dopravy
+        </p>
+
+        <div class="row"><div class="col-lg-8 col-md-7 col-sm-6">
+            <br />
+            <h2>O projektu</h2>
+            <p>
+                Simulátory řízení železniční dopravy jsou v českém prostředí velmi oblíbené, o čemž
+                svědčí i široká komunita hráčů diskutujících na
+                <a href="https://www.k-report.net/discus/messages/238/238.html">K-Reportu</a>.
+                Projekt simJOP chce nabídnout komunitní a open-source variantu takové hry.
+            </p><p>
+                Zatím jsme na začátku. Je hotová infrastruktura, pracuje se na editoru stanic.
+                Vlastní hra nabídne hru více hráčů nad jednou oblastí. Ikdyž je v názvu JOPka,
+                bude k dispozici veřejné API, přes které nebude problém napsat i jiná zabezpečovací
+                zařízení.
+            </p>
+        </div></div>
+
+    <div>
+        <ul>
+            {% for city in cities %}
+                <li>{{ city.name }}: {{ city.size}}</li>
+            {% endfor %}
+        </ul>
+        </div>
+
+    </div>
+
+    <footer class="footer navbar d-flex justify-content-center mt-auto">
+        <div class="container text-muted">
+            <p>
+                simJOP [
+                <a href="https://gitlab.com/simjop">gitlab</a> |
+                <a href="https://discord.gg/drcmjBf">discord</a> ]
+                &emsp;
+                powered by [
+                <a href="https://contabo.com">contabo</a> |
+                <a href="https://getbootstrap.com/">bootstrap</a> |
+                <a href="https://bootswatch.com/flatly/">flatly</a> ]
+                &emsp;
+                background <a href="https://pixabay.com/photos/railway-station-track-trains-4305749/">image</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <script src="/static/bootstrap/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="/static/bootstrap/popper.min.js" crossorigin="anonymous"></script>
+    <script src="/static/bootstrap/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</div>
+</body>
+
+</html>
