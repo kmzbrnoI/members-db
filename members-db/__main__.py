@@ -7,7 +7,7 @@ Usage:
   members-db --version
 
 Options:
-  --cfg=<config_file>   Configuration file [default: ./member-db.cfg].
+  --cfg=<config_file>   Configuration file [default: ./members-db.cfg].
   -h --help             Show this screen.
   --version             Show version.
 """
@@ -71,7 +71,7 @@ def configuration_setup(args):
         logging.basicConfig(level=logging.CRITICAL)
     else:
         logging.basicConfig(level=logging.INFO)
-        logging.warning('Missing member-db/log_level in configuration file [%s]', args['--cfg'])
+        logging.warning('Missing members-db/log_level in configuration file [%s]', args['--cfg'])
 
     db = cfg['db']  # pylint: disable-msg=C0103
     url = f"mariadb+aiomysql://{db['user']}:{db['pass']}@{db['host']}:{db['port']}/{db['name']}"
