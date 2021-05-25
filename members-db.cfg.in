@@ -7,6 +7,6 @@ port_number = 8080
 [db]
 host = localhost
 port = 3306
-user = john
-pass = pass1234
-name = members_db
+user = db_user
+pass = db_password
+name = database_name
