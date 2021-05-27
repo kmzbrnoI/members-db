@@ -25,3 +25,16 @@ class SiteHandler:
         await create_user(request.app['db_session'], 'Petr');
         
         return {'theme': self.theme, 'user': 'user', 'cities': cities}
+
+
+    @aiohttp_jinja2.template('user_add.html')
+    async def user_add(self, request):
+        return {'theme': self.theme}
+
+    @aiohttp_jinja2.template('user_check.html')
+    async def user_check(self, request):
+
+        data = await request.post()
+        login = data['user_email']
+        logging.info(login)
+        return {'theme': self.theme}
