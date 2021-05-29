@@ -9,6 +9,10 @@ Members DB
     pip3 install -r requirements.txt
 
 
+## Configuration of Google'đ OAuth2
+* [dashboard](https://console.cloud.google.com/apis/dashboard)
+
+
 ## Resources
 
 * [docopt](http://docopt.org/)
