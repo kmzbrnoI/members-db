@@ -4,3 +4,4 @@ aiomysql
 sqlalchemy
 aiohttp[speedups]
 aiohttp_jinja2
+aiogoogle

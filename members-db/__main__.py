@@ -18,13 +18,14 @@ from docopt import docopt
 import logging
 import configparser
 
-from db.tables import init_db, db_engine_ctx
-from core.routes import setup_routes
-from core.views import SiteHandler
-
 from aiohttp import web
 import jinja2
 import aiohttp_jinja2
+from aiogoogle import Aiogoogle
+
+from db.tables import init_db, db_engine_ctx
+from core.routes import setup_routes
+from core.views import SiteHandler
 
 
 STATIC_ROOT = os.path.abspath('./members-db/static')
@@ -43,6 +44,8 @@ async def init_app(config):
 
     handler = SiteHandler()
     setup_routes(app, handler, STATIC_ROOT)
+
+    app['aiogoogle'] = Aiogoogle(client_creds=app['cfg']['google-auth']['client_secret'])
 
     return app
 
@@ -72,6 +75,8 @@ def configuration_setup(args):
     else:
         logging.basicConfig(level=logging.INFO)
         logging.warning('Missing members-db/log_level in configuration file [%s]', args['--cfg'])
+
+    cfg['google-auth']['scopes'] = ['https://www.googleapis.com/auth/userinfo.profile']
 
     db = cfg['db']  # pylint: disable-msg=C0103
     url = f"mariadb+aiomysql://{db['user']}:{db['pass']}@{db['host']}:{db['port']}/{db['name']}"

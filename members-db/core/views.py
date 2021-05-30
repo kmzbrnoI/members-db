@@ -20,12 +20,22 @@ class SiteHandler:
             {'name': 'Olomouc', 'size': 200000},
             {'name': 'Lipník', 'size': 15000},
             {'name': 'Přerov', 'size': 50000},
-        ]    
-        
+        ]
+
         await create_user(request.app['db_session'], 'Petr');
-        
+
         return {'theme': self.theme, 'user': 'user', 'cities': cities}
 
+    async def auth_login(self, request):
+        uri = request.app['aiogoogle'].oauth2.authorization_url(
+            client_creds={
+                'client_id': request.app['cfg']['google-auth']['client_id'],
+                'client_secret':  request.app['cfg']['google-auth']['client_secret'],
+                'scopes': [],
+                'redirect_uri': 'http://celestian.cz:8080/auth/callback'
+            },
+        )
+        return web.HTTPTemporaryRedirect(location=uri)
 
     @aiohttp_jinja2.template('user_add.html')
     async def user_add(self, request):
