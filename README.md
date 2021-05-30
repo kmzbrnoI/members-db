@@ -8,6 +8,7 @@ Members DB
     source env/bin/activate
     pip3 install -r requirements.txt
 
+
 ## Database setup
 
     CREATE DATABASE <db_name>;
@@ -15,7 +16,7 @@ Members DB
     GRANT ALL PRIVILEGES ON <db_name>.* TO '<user>'@'%';
 
 
-## Configuration of Google'đ OAuth2
+## Configuration of Google OAuth2
 * [dashboard](https://console.cloud.google.com/apis/dashboard)
 
 
