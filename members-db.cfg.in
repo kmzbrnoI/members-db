@@ -1,12 +1,17 @@
 [members-db]
-log_level = info
+log_level = <debug, info, warning, error, critical>
 
 [web]
-port_number = 8080
+port_number = <web_port>
+
+[google-auth]
+client_id = <id>
+client_secret = <secret>
+scopes = <scope_1, scope_2>
 
 [db]
-host = localhost
-port = 3306
-user = db_user
-pass = db_password
-name = database_name
+host = <host>
+port = <db_port>
+user = <db_user>
+pass = <db_password>
+name = <database_name>
