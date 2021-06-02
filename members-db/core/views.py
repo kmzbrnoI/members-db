@@ -24,18 +24,40 @@ class SiteHandler:
 
         await create_user(request.app['db_session'], 'Petr');
 
-        return {'theme': self.theme, 'user': 'user', 'cities': cities}
+        return {'theme': self.theme, 'user': 'user', 'cities': cities, 'a_data': 'nothing'}
 
     async def auth_login(self, request):
         uri = request.app['aiogoogle'].oauth2.authorization_url(
+            include_granted_scopes=True,
             client_creds={
                 'client_id': request.app['cfg']['google-auth']['client_id'],
                 'client_secret':  request.app['cfg']['google-auth']['client_secret'],
-                'scopes': [],
+                'scopes': ['https://www.googleapis.com/auth/userinfo.profile'],
                 'redirect_uri': 'http://celestian.cz:8080/auth/callback'
             },
         )
         return web.HTTPTemporaryRedirect(location=uri)
+
+    @aiohttp_jinja2.template('index.html')
+    async def auth_callback(self, request):
+        # Here we request the access and refresh token
+        if request.query.get('code'):
+            full_user_creds = await request.app['aiogoogle'].oauth2.build_user_creds(
+                grant = request.query.get('code'),
+                client_creds={
+                    'client_id': request.app['cfg']['google-auth']['client_id'],
+                    'client_secret':  request.app['cfg']['google-auth']['client_secret'],
+                    'scopes': ['https://www.googleapis.com/auth/userinfo.profile'],
+                    'redirect_uri': 'http://celestian.cz:8080/auth/callback'
+                }
+            )
+            # Here, you should store full_user_creds in a db. Especially the refresh token and access token.
+            logging.info(full_user_creds)
+            return {'theme': self.theme}
+
+        else:
+            # Should either receive a code or an error
+            return {'theme': self.theme}
 
     @aiohttp_jinja2.template('user_add.html')
     async def user_add(self, request):
