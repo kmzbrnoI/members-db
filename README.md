@@ -28,3 +28,6 @@ Members DB
 ## Resources
 * [docopt](http://docopt.org/)
 * [aiohttp](https://docs.aiohttp.org/en/stable/)
+* [aiohttp_session](https://aiohttp-session.readthedocs.io/en/stable/reference.html#module-aiohttp_session)
+* [aiogoogle](https://aiogoogle.readthedocs.io/en/latest/)
+* [asynchronous sqlalchemy](https://docs.sqlalchemy.org/en/14/orm/extensions/asyncio.html)

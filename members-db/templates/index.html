@@ -27,6 +27,15 @@
     </nav>
 
     <div class="container">
+
+        {% if error %}
+            <br />
+            <div class="alert alert-dismissible alert-danger">
+              <h4 class="alert-heading">{{ error.head }}</h4>
+              <p class="mb-0">{{ error.body }}</p>
+            </div>
+        {% endif %}
+
         <div class="page-header">
             <br />
             <h1>KMŽ Brno I</h1>

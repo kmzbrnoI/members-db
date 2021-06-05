@@ -1,8 +1,12 @@
+wheel
 autopep8
 pylint
 docopt
+cryptography
 asyncio
 aiomysql
 sqlalchemy
 aiohttp[speedups]
+aiohttp_session
 aiohttp_jinja2
+aiogoogle

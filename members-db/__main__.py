@@ -1,7 +1,7 @@
 """members-db
 
 Usage:
-  members-db init_db [--cfg=<config_file>]
+  members-db init_db [--cfg=<config_file>] <admin_email>
   members-db run [--cfg=<config_file>]
   members-db (-h | --help)
   members-db --version
@@ -14,17 +14,23 @@ Options:
 
 import os
 import asyncio
-from docopt import docopt
 import logging
 import configparser
+import base64
+from docopt import docopt
 
-from db.tables import init_db, db_engine_ctx
-from core.routes import setup_routes
-from core.views import SiteHandler
-
+from cryptography import fernet
 from aiohttp import web
+from aiohttp_session import setup
+from aiohttp_session.cookie_storage import EncryptedCookieStorage
 import jinja2
 import aiohttp_jinja2
+from aiogoogle import Aiogoogle
+
+from db.tables import db_engine_ctx
+from db.setup import init_db
+from core.routes import setup_routes
+from core.views import SiteHandler
 
 
 STATIC_ROOT = os.path.abspath('./members-db/static')
@@ -36,6 +42,10 @@ async def init_app(config):
     app = web.Application()
     app['cfg'] = config
 
+    fernet_key = fernet.Fernet.generate_key()
+    secret_key = base64.urlsafe_b64decode(fernet_key)
+    setup(app, EncryptedCookieStorage(secret_key))
+
     loader = jinja2.FileSystemLoader(TEMPLATES_ROOT)
     aiohttp_jinja2.setup(app, loader=loader)
 
@@ -43,6 +53,8 @@ async def init_app(config):
 
     handler = SiteHandler()
     setup_routes(app, handler, STATIC_ROOT)
+
+    app['aiogoogle'] = Aiogoogle(client_creds=app['cfg']['google-auth']['client_creds'])
 
     return app
 
@@ -73,6 +85,17 @@ def configuration_setup(args):
         logging.basicConfig(level=logging.INFO)
         logging.warning('Missing members-db/log_level in configuration file [%s]', args['--cfg'])
 
+    cfg['google-auth']['client_creds'] = {
+        'client_id': cfg['google-auth']['client_id'],
+        'client_secret': cfg['google-auth']['client_secret'],
+        'scopes': [
+            'https://www.googleapis.com/auth/userinfo.profile',
+            'https://www.googleapis.com/auth/userinfo.email',
+            'openid'
+        ],
+        'redirect_uri': 'http://celestian.cz:8080/auth/callback'
+    }
+
     db = cfg['db']  # pylint: disable-msg=C0103
     url = f"mariadb+aiomysql://{db['user']}:{db['pass']}@{db['host']}:{db['port']}/{db['name']}"
     cfg['db']['url'] = url
@@ -87,7 +110,7 @@ def main():
 
     if args['init_db']:
         try:
-            asyncio.run(init_db(config))
+            asyncio.run(init_db(config, args['<admin_email>']))
         finally:
             logging.info('Successfully shutdown members-db.')
 
