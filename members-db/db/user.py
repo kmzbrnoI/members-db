@@ -15,7 +15,7 @@ async def add_user_info(db_session, email, name, given_name, family_name, avatar
             current_user.name = name
             current_user.given_name = given_name
             current_user.family_name = family_name
-            current_user.picture = picture
+            current_user.avatar = avatar
         else:
             user = User(
                 email=email,
