@@ -62,7 +62,6 @@ class SiteHandler:
             logging.warning('OAuth2: Timeout on tokens.')
             return web.HTTPTemporaryRedirect(
                 location='/?' + parse.urlencode({'error': 'login_timeout'}))
-
         elif not request.query.get('code'):
             loggin.warning('OAuth2: Authorization failed.')
             return web.HTTPTemporaryRedirect(
@@ -73,14 +72,14 @@ class SiteHandler:
             nonce=user_session['nonce'],
             verify=True
         )
-        # TODO
-        logging.info(full_user_creds)
 
         google_granted_email = full_user_creds['id_token']['email']
         if not await is_account_allowed(request.app['db_session'], google_granted_email):
             logging.warning('OAuth2: Not allowed user [%s]', google_granted_email)
             return web.HTTPTemporaryRedirect(
                 location='/?' + parse.urlencode({'error': 'login_not_allowed'}))
+
+        logging.info(full_user_creds)
 
         await add_user_info(
             request.app['db_session'],
